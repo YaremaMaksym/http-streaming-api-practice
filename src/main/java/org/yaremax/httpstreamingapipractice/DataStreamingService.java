@@ -11,18 +11,15 @@ import java.io.PrintWriter;
 public class DataStreamingService {
 
     public StreamingResponseBody streamTextData() {
-        return new StreamingResponseBody() {
-            @Override
-            public void writeTo(OutputStream outputStream) throws IOException {
-                try (PrintWriter writer = new PrintWriter(outputStream)) {
-                    for (int i = 0; i < 10000; i++) {
-                        writer.println("Text data line " + i);
-                        writer.flush();
-                        Thread.sleep(10); // simulate delay
-                    }
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
+        return outputStream -> {
+            try (PrintWriter writer = new PrintWriter(outputStream)) {
+                for (int i = 0; i < 1000; i++) {
+                    writer.println("Text data line " + i);
+                    writer.flush();
+                    Thread.sleep(10); // simulate delay
                 }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         };
     }
