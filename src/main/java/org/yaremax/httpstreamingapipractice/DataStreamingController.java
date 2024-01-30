@@ -20,4 +20,11 @@ public class DataStreamingController {
                 .header("Content-Type", "text/plain")
                 .body(dataStreamingService.streamTextData());
     }
+
+    @GetMapping("/json-data")
+    public ResponseEntity<StreamingResponseBody> streamJsonData() {
+        return ResponseEntity.ok()
+                .header("Content-Type", "application/json")
+                .body(dataStreamingService.streamJsonData());
+    }
 }
